@@ -49,7 +49,7 @@ namespace HamedaniProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddNewCustomer(CustomerTable customer)
         {
-            //adding some code
+            //adding some code asasas
             if (!ModelState.IsValid)
             {
                 var memberShipTable = _context.MembershipTypeTables.ToList();
