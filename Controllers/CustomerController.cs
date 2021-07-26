@@ -69,6 +69,11 @@ namespace HamedaniProject.Controllers
          
         }
 
+        public string trial()
+        {
+            return null;
+        }
+
         public ActionResult GetAllCustomers()
         {
             List<CustomerTable> customer = _context.CustomerTables.ToList();
