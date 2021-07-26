@@ -1,0 +1,40 @@
+﻿@model HamedaniProject.viewModels.NewCustomerViewModel
+@{
+    ViewBag.Title = "CreateNewCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CreateNewCustomer</h2>
+
+
+@using (Html.BeginForm("AddNewCustomer", "Customer"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.Name)
+        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m=>m.Customer.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.Birthdate)
+        @Html.TextBoxFor(m => m.Customer.Birthdate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m=>m.Customer.Birthdate)
+    </div>
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.Customer.MembershipTypeId)
+        @Html.DropDownListFor(m => m.Customer.MembershipTypeId,new SelectList(Model.Membershiptable,"Id", "TypeOfMemberShip"),"Select a value" ,new { @class = "form-control" })*@
+
+     @Html.LabelFor(m => m.Customer.MembershipTypeId)
+     @Html.DropDownListFor(m=>m.Customer.MembershipTypeId,new SelectList(Model.Membershiptable,"Id", "TypeOfMemberShip"),"Select a Valuue",new { @class ="form-control"})
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsLetter) Is to be subscribed?
+        </label>
+    </div>
+    @Html.AntiForgeryToken();
+    <button type="submit" class="="btn btn-primary>Save</button>
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    }

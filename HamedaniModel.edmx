@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HamedaniProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IsSubscribedToNewsLetter" Type="bit" Nullable="false" />
+          <Property Name="MembershipTypeId" Type="int" />
+          <Property Name="Birthdate" Type="date" />
+        </EntityType>
+        <EntityType Name="MembershipTypeTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="SignUpFee" Type="int" Nullable="false" />
+          <Property Name="DurationInMonths" Type="int" Nullable="false" />
+          <Property Name="DiscountRate" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TypeOfMemberShip" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MoviesTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Genre" Type="varchar" MaxLength="500" />
+          <Property Name="ReleaseDate" Type="varchar" MaxLength="500" />
+          <Property Name="AvailableStock" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HamedaniProject.dbo.Sample' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Sample">
+          <Key>
+            <PropertyRef Name="TrialID" />
+            <PropertyRef Name="TrialName" />
+          </Key>
+          <Property Name="TrialID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrialName" Type="varchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Customers_MembershipType">
+          <End Role="MembershipTypeTable" Type="Self.MembershipTypeTable" Multiplicity="0..1" />
+          <End Role="CustomerTable" Type="Self.CustomerTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembershipTypeTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerTable">
+              <PropertyRef Name="MembershipTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembershipType_MembershipType">
+          <End Role="MembershipTypeTable" Type="Self.MembershipTypeTable" Multiplicity="1" />
+          <End Role="MembershipTypeTable1" Type="Self.MembershipTypeTable" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MembershipTypeTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembershipTypeTable1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HamedaniProjectModelStoreContainer">
+          <EntitySet Name="CustomerTable" EntityType="Self.CustomerTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MembershipTypeTable" EntityType="Self.MembershipTypeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MoviesTable" EntityType="Self.MoviesTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sample" EntityType="Self.Sample" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Sample].[TrialID] AS [TrialID], 
+    [Sample].[TrialName] AS [TrialName]
+    FROM [dbo].[Sample] AS [Sample]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Customers_MembershipType" Association="Self.FK_Customers_MembershipType">
+            <End Role="MembershipTypeTable" EntitySet="MembershipTypeTable" />
+            <End Role="CustomerTable" EntitySet="CustomerTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembershipType_MembershipType" Association="Self.FK_MembershipType_MembershipType">
+            <End Role="MembershipTypeTable" EntitySet="MembershipTypeTable" />
+            <End Role="MembershipTypeTable1" EntitySet="MembershipTypeTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HamedaniProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CustomerTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsSubscribedToNewsLetter" Type="Boolean" Nullable="false" />
+          <Property Name="MembershipTypeId" Type="Int32" />
+          <NavigationProperty Name="MembershipTypeTable" Relationship="Self.FK_Customers_MembershipType" FromRole="CustomerTable" ToRole="MembershipTypeTable" />
+          <Property Name="Birthdate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="MembershipTypeTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="SignUpFee" Type="Int32" Nullable="false" />
+          <Property Name="DurationInMonths" Type="Int32" Nullable="false" />
+          <Property Name="DiscountRate" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustomerTables" Relationship="Self.FK_Customers_MembershipType" FromRole="MembershipTypeTable" ToRole="CustomerTable" />
+          <Property Name="TypeOfMemberShip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Sample">
+          <Key>
+            <PropertyRef Name="TrialID" />
+            <PropertyRef Name="TrialName" />
+          </Key>
+          <Property Name="TrialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrialName" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Customers_MembershipType">
+          <End Role="MembershipTypeTable" Type="Self.MembershipTypeTable" Multiplicity="0..1" />
+          <End Role="CustomerTable" Type="Self.CustomerTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembershipTypeTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerTable">
+              <PropertyRef Name="MembershipTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembershipType_MembershipType">
+          <End Role="MembershipTypeTable" Type="Self.MembershipTypeTable" Multiplicity="1" />
+          <End Role="MembershipTypeTable1" Type="Self.MembershipTypeTable" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MembershipTypeTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembershipTypeTable1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HamedaniProjectNewEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerTables" EntityType="Self.CustomerTable" />
+          <EntitySet Name="MembershipTypeTables" EntityType="Self.MembershipTypeTable" />
+          <EntitySet Name="Samples" EntityType="Self.Sample" />
+          <AssociationSet Name="FK_Customers_MembershipType" Association="Self.FK_Customers_MembershipType">
+            <End Role="MembershipTypeTable" EntitySet="MembershipTypeTables" />
+            <End Role="CustomerTable" EntitySet="CustomerTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembershipType_MembershipType" Association="Self.FK_MembershipType_MembershipType">
+            <End Role="MembershipTypeTable" EntitySet="MembershipTypeTables" />
+            <End Role="MembershipTypeTable1" EntitySet="MembershipTypeTables" />
+          </AssociationSet>
+          <EntitySet Name="MoviesTables" EntityType="HamedaniProjectModel.MoviesTable" />
+        </EntityContainer>
+        <EntityType Name="MoviesTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Genre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ReleaseDate" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="AvailableStock" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HamedaniProjectModelStoreContainer" CdmEntityContainer="HamedaniProjectNewEntities">
+          <EntitySetMapping Name="CustomerTables">
+            <EntityTypeMapping TypeName="HamedaniProjectModel.CustomerTable">
+              <MappingFragment StoreEntitySet="CustomerTable">
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsSubscribedToNewsLetter" ColumnName="IsSubscribedToNewsLetter" />
+                <ScalarProperty Name="MembershipTypeId" ColumnName="MembershipTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MembershipTypeTables">
+            <EntityTypeMapping TypeName="HamedaniProjectModel.MembershipTypeTable">
+              <MappingFragment StoreEntitySet="MembershipTypeTable">
+                <ScalarProperty Name="TypeOfMemberShip" ColumnName="TypeOfMemberShip" />
+                <ScalarProperty Name="SignUpFee" ColumnName="SignUpFee" />
+                <ScalarProperty Name="DurationInMonths" ColumnName="DurationInMonths" />
+                <ScalarProperty Name="DiscountRate" ColumnName="DiscountRate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Samples">
+            <EntityTypeMapping TypeName="HamedaniProjectModel.Sample">
+              <MappingFragment StoreEntitySet="Sample">
+                <ScalarProperty Name="TrialID" ColumnName="TrialID" />
+                <ScalarProperty Name="TrialName" ColumnName="TrialName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MoviesTables">
+            <EntityTypeMapping TypeName="HamedaniProjectModel.MoviesTable">
+              <MappingFragment StoreEntitySet="MoviesTable">
+                <ScalarProperty Name="AvailableStock" ColumnName="AvailableStock" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

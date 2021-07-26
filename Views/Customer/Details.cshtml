@@ -1,0 +1,38 @@
+﻿@model HamedaniProject.viewModels.NewCustomerViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Customer Details</h1>
+
+
+
+@using (Html.BeginForm("UpdateCustomerDetails", "Customer"))
+{
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.Name)
+        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.Birthdate)
+        @Html.TextBoxFor(m => m.Customer.Birthdate, new { @class = "form-control" })
+
+    </div>
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.Customer.MembershipTypeId)
+            @Html.DropDownListFor(m => m.Customer.MembershipTypeId,new SelectList(Model.Membershiptable,"Id", "TypeOfMemberShip"),"Select a value" ,new { @class = "form-control" })*@
+
+        @Html.LabelFor(m => m.Customer.MembershipTypeId)
+        @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.Membershiptable, "Id", "TypeOfMemberShip"), "Select a Value", new { @class = "form-control" })
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsLetter) Is to be subscribed?
+        </label>
+    </div>
+
+    @Html.HiddenFor(m=>m.Customer.Id)
+    <button type="submit" class="=" btn btn-primary>Update</button>
+}

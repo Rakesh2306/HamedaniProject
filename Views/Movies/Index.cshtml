@@ -1,0 +1,36 @@
+﻿@model HamedaniProject.viewModels.MoviesViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<button class="btn btn-primary mt-5">Add Movie @Html.ActionLink("AddMovies", "AddMovies", "Movies")</button>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Movie Name</th>
+            <th scope="col">Genre</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var key in Model.MoviesTable)
+        {
+
+            <tr class="table-light">
+
+                <td>@Html.ActionLink(key.Name,"MovieDetails","Movies",new { Id= key.Id},null)</td>
+                <td>@key.Genre</td>
+
+                
+
+
+            </tr>
+        }
+
+        </tbody>
+</table>
+

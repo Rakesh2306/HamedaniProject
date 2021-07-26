@@ -1,0 +1,14 @@
+﻿@model HamedaniProject.viewModels.SampleDataViewModel
+
+@{
+    ViewBag.Title = "GetAllCustomers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var key in Model.samples)
+{
+<div>@Html.ActionLink(key.Name, "Details", "Customer", new { Id = key.Id },null)</div> 
+    <div>@key.MembershipTypeTable.DiscountRate</div>
+    <div>@key.MembershipTypeTable.TypeOfMemberShip</div>
+
+}

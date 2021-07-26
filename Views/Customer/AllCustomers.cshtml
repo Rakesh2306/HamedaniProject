@@ -1,0 +1,11 @@
+﻿@model HamedaniProject.viewModels.AllCustomerViewModel
+@{
+    ViewBag.Title = "AllCustomers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach(var customer in Model.Customer)
+{
+ <div><a href="https://localhost:44310/Customer/Details/@customer.Id">@customer.Name</a></div>
+}
+
